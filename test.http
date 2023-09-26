@@ -4,5 +4,29 @@ POST http://localhost:8080/api/postamat/suitableCell
 Content-Type: application/json
 
 {
-  "parcelDimensions": [30, 20, 10]
+  "parcelDimensions": [
+    {
+      "unit": "cm",
+      "scale": "ABSOLUTE",
+      "value": 30
+    },
+    {
+      "unit": "cm",
+      "scale": "ABSOLUTE",
+      "value": 20
+    },
+    {
+      "unit": "cm",
+      "scale": "ABSOLUTE",
+      "value": 10
+    }
+  ]
 }
+
+###[
+###{
+###  "unit": "mm",
+###  "scale": "ABSOLUTE",
+###  "value": 450
+###}
+###]
