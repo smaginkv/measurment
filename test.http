@@ -1,0 +1,8 @@
+
+### Подобрать подходящую ячейку
+POST http://localhost:8080/api/postamat/suitableCell
+Content-Type: application/json
+
+{
+  "parcelDimensions": [30, 20, 10]
+}
