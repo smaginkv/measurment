@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public class PostamatCellsRepository {
-    public List<PostamatCellDbo> getAllCell() {
+    public List<PostamatCellDbo> getAllCells() {
         return List.of(
                 new PostamatCellDbo(
                         List.of(

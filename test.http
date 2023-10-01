@@ -2,6 +2,7 @@
 ### Подобрать подходящую ячейку
 POST http://localhost:8080/api/postamat/suitableCell
 Content-Type: application/json
+Accept-Language: ja-JP
 
 {
   "parcelDimensions": [
@@ -23,10 +24,7 @@ Content-Type: application/json
   ]
 }
 
-###[
-###{
-###  "unit": "mm",
-###  "scale": "ABSOLUTE",
-###  "value": 450
-###}
-###]
+### Получить общий объем постамата
+GET http://localhost:8080/api/postamat/volume
+Accept-Language: ja-JP
+Content-Type: application/json
