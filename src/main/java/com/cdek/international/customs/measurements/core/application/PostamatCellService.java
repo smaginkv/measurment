@@ -18,20 +18,20 @@ public class PostamatCellService {
     private final VolumeWeightFactory volumeWeightFactory;
 
     public List<PostamatCell> getSuitableCell(List<Quantity<Length>> parcelDimensions) {
-        return postamatCellsRepository.getAllCells().stream()
+        return this.postamatCellsRepository.getAllCells().stream()
                 .filter(cell -> cell.isGreaterThanOrEqualTo(parcelDimensions))
                 .toList();
     }
 
     public ComparableQuantity<Volume> getVolume() {
-        return postamatCellsRepository.getAllCells().stream()
+        return this.postamatCellsRepository.getAllCells().stream()
                 .map(PostamatCell::getCellVolume)
                 .reduce(ComparableQuantity::add)
                 .orElseThrow(IllegalStateException::new);
     }
 
     public ComparableQuantity<VolumeWeight> getVolumeWeight() {
-        return postamatCellsRepository.getAllCells().stream()
+        return this.postamatCellsRepository.getAllCells().stream()
                 .map(cell ->
                         Stream.of(getCellWeight(cell), getCellVolumeWeight(cell))
                                 .max(Comparable::compareTo)
@@ -42,10 +42,10 @@ public class PostamatCellService {
     }
 
     private ComparableQuantity<VolumeWeight> getCellWeight(PostamatCell cell) {
-        return volumeWeightFactory.of(cell.weight());
+        return this.volumeWeightFactory.of(cell.weight());
     }
 
     private ComparableQuantity<VolumeWeight> getCellVolumeWeight(PostamatCell cell) {
-        return volumeWeightFactory.of(cell.getCellVolume());
+        return this.volumeWeightFactory.of(cell.getCellVolume());
     }
 }
