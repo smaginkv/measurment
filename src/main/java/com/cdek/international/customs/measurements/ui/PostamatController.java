@@ -20,26 +20,26 @@ import java.util.List;
  * Нужна зависимость web+lombok+indriya
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/postamat")
 @RequiredArgsConstructor
 public class PostamatController {
     private final PostamatCellService postamatCellService;
     private final PostamatConverter postamatConverter;
 
-    @PostMapping("/postamat/suitableCell")
+    @PostMapping("suitableCell")
     public List<String> suitableCell(@RequestBody SuitableCellRequestDto requestDto) {
-        final var cells = postamatCellService.getSuitableCell(
+        final var cells = this.postamatCellService.getSuitableCell(
                 requestDto.parcelDimensions());
 
         return cells.stream()
-                .map(postamatConverter::toCellResponse)
+                .map(this.postamatConverter::toCellResponse)
                 .toList();
     }
 
-    @GetMapping("/postamat/volume")
+    @GetMapping("volume")
     public String getPostamatVolume() {
-        final var userConvertedVolume = postamatConverter.toUserVolumeResponseDto(
-                postamatCellService.getVolume());
+        final var userConvertedVolume = this.postamatConverter.toUserVolumeResponseDto(
+                this.postamatCellService.getVolume());
 
         return NumberDelimiterQuantityFormat.getInstance(
                         NumberFormat.getInstance(LocaleContextHolder.getLocale()),
@@ -47,8 +47,8 @@ public class PostamatController {
                 .format(userConvertedVolume);
     }
 
-    @GetMapping("/postamat/volumeWeight")
+    @GetMapping("volumeWeight")
     public ComparableQuantity<VolumeWeight> getPostamatVolumeWeight() {
-        return postamatCellService.getVolumeWeight();
+        return this.postamatCellService.getVolumeWeight();
     }
 }
