@@ -1,6 +1,5 @@
 package com.cdek.international.customs.measurements.ui;
 
-import com.cdek.international.customs.measurements.core.application.PostamatCell;
 import com.cdek.international.customs.measurements.core.application.PostamatCellService;
 import com.cdek.international.customs.measurements.core.application.VolumeWeight;
 import lombok.RequiredArgsConstructor;
@@ -14,14 +13,8 @@ import tech.units.indriya.ComparableQuantity;
 import tech.units.indriya.format.LocalUnitFormat;
 import tech.units.indriya.format.NumberDelimiterQuantityFormat;
 
-import javax.measure.Quantity;
-import javax.measure.quantity.Volume;
 import java.text.NumberFormat;
 import java.util.List;
-import java.util.stream.Collectors;
-
-import static javax.measure.MetricPrefix.CENTI;
-import static tech.units.indriya.unit.Units.METRE;
 
 /**
  * Нужна зависимость web+lombok+indriya
