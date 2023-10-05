@@ -1,5 +1,6 @@
 package com.cdek.international.customs.measurements.ui;
 
+import com.cdek.international.customs.measurements.core.application.PostamatCell;
 import com.cdek.international.customs.measurements.core.application.PostamatCellService;
 import com.cdek.international.customs.measurements.core.application.VolumeWeight;
 import lombok.RequiredArgsConstructor;
@@ -28,28 +29,24 @@ import static tech.units.indriya.unit.Units.METRE;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
-public class Controller {
+public class PostamatController {
     private final PostamatCellService postamatCellService;
+    private final PostamatConverter postamatConverter;
 
     @PostMapping("postamat/suitableCell")
     public List<String> getSuitableCell(@RequestBody SuitableCellRequestDto requestDto) {
-        final var parcelDimensions = requestDto.parcelDimensions();
-        final var cells = postamatCellService.getSuitableCell(parcelDimensions);
+        final var cells = postamatCellService.getSuitableCell(
+                requestDto.parcelDimensions());
 
         return cells.stream()
-                .map(cell -> cell.stream()
-                        .map(cellDimension -> cellDimension.to(CENTI(METRE)))
-                        .map(Quantity::getValue)
-                        .map(Object::toString)
-                        .collect(Collectors.joining("x", "", " " + CENTI(METRE).toString())))
+                .map(postamatConverter::toCellResponse)
                 .toList();
     }
 
     @GetMapping("postamat/volume")
     public String getPostamatVolume() {
-        final var volume = postamatCellService.getVolume();
-        final var userConvertedVolume = volume.to(
-                CENTI(METRE).multiply(CENTI(METRE)).multiply(CENTI(METRE)).asType(Volume.class));
+        final var userConvertedVolume = postamatConverter.toUserVolumeResponseDto(
+                postamatCellService.getVolume());
 
         return NumberDelimiterQuantityFormat.getInstance(
                         NumberFormat.getInstance(LocaleContextHolder.getLocale()),

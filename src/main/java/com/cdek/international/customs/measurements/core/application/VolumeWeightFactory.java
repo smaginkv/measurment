@@ -16,8 +16,8 @@ public class VolumeWeightFactory {
     private static final int VOLUMETRIC_WEIGHT_COEFFICIENT = 900;
 
     public ComparableQuantity<VolumeWeight> of(Quantity<Mass> weight) {
-        final var inKilogram = weight.to(KILOGRAM).getValue();
-        return Quantities.getQuantity(inKilogram, VOLUME_WEIGHT);
+        final var inKilo = weight.to(KILOGRAM).getValue();
+        return Quantities.getQuantity(inKilo, VOLUME_WEIGHT);
     }
 
     public ComparableQuantity<VolumeWeight> of(ComparableQuantity<Volume> volume) {
