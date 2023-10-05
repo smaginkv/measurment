@@ -26,8 +26,8 @@ public class PostamatController {
     private final PostamatCellService postamatCellService;
     private final PostamatConverter postamatConverter;
 
-    @PostMapping("postamat/suitableCell")
-    public List<String> getSuitableCell(@RequestBody SuitableCellRequestDto requestDto) {
+    @PostMapping("/postamat/suitableCell")
+    public List<String> suitableCell(@RequestBody SuitableCellRequestDto requestDto) {
         final var cells = postamatCellService.getSuitableCell(
                 requestDto.parcelDimensions());
 
@@ -36,7 +36,7 @@ public class PostamatController {
                 .toList();
     }
 
-    @GetMapping("postamat/volume")
+    @GetMapping("/postamat/volume")
     public String getPostamatVolume() {
         final var userConvertedVolume = postamatConverter.toUserVolumeResponseDto(
                 postamatCellService.getVolume());
@@ -47,7 +47,7 @@ public class PostamatController {
                 .format(userConvertedVolume);
     }
 
-    @GetMapping("postamat/volumeWeight")
+    @GetMapping("/postamat/volumeWeight")
     public ComparableQuantity<VolumeWeight> getPostamatVolumeWeight() {
         return postamatCellService.getVolumeWeight();
     }
