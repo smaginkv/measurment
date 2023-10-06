@@ -24,8 +24,7 @@ class PostamatCellTest {
 
         //then
         Assertions.assertThat(actual)
-                .usingComparator(Comparable::compareTo)
-                .isEqualTo(expected);
+                .isEqualByComparingTo(expected);
     }
 
     @Test

@@ -84,8 +84,7 @@ class PostamatCellServiceTest {
         final var actual = underTest.getVolume();
 
         Assertions.assertThat(actual)
-                .usingComparator(Comparable::compareTo)
-                .isEqualTo(expected);
+                .isEqualByComparingTo(expected);
     }
 
     @Test
@@ -126,7 +125,6 @@ class PostamatCellServiceTest {
 
         //then
         Assertions.assertThat(actual)
-                .usingComparator(Comparable::compareTo)
-                .isEqualTo(Quantities.getQuantity(43.75, VOLUME_WEIGHT));
+                .isEqualByComparingTo(Quantities.getQuantity(43.75, VOLUME_WEIGHT));
     }
 }
