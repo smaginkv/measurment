@@ -14,9 +14,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import tech.units.indriya.quantity.Quantities;
+import tech.units.indriya.unit.Units;
 
 import java.util.List;
 
+import static javax.measure.MetricPrefix.CENTI;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
@@ -40,14 +43,49 @@ class PostamatControllerTest {
     void suitableCell_whenOk_expectEquals() throws Exception {
         //given
         final var requestDto = new SuitableCellRequestDto(List.of(20, 25, 33));
-        final var postamatCell1_1 = new PostamatCell(List.of(21, 26, 34));
-        final var postamatCell1_2 = new PostamatCell(List.of(21, 25, 33));
-        final var postamatCell1_3 = new PostamatCell(List.of(20, 26, 33));
-        final var postamatCell1_4 = new PostamatCell(List.of(20, 25, 34));
-        final var postamatCell2 = new PostamatCell(List.of(20, 25, 33));
-        final var postamatCell3_1 = new PostamatCell(List.of(21, 24, 32));
-        final var postamatCell3_2 = new PostamatCell(List.of(19, 26, 32));
-        final var postamatCell3_3 = new PostamatCell(List.of(19, 24, 34));
+        final var postamatCell1_1 = new PostamatCell(List.of(
+                Quantities.getQuantity(21, CENTI(Units.METRE)),
+                Quantities.getQuantity(26,CENTI(Units.METRE)),
+                        Quantities.getQuantity(34, CENTI(Units.METRE))
+        ));
+
+        final var postamatCell1_2 = new PostamatCell(List.of(
+                Quantities.getQuantity(21, CENTI(Units.METRE)),
+                        Quantities.getQuantity(25, CENTI(Units.METRE)),
+                                Quantities.getQuantity(33, CENTI(Units.METRE))
+        ));
+
+        final var postamatCell1_3 = new PostamatCell(List.of(
+                Quantities.getQuantity(20, CENTI(Units.METRE)),
+                        Quantities.getQuantity(26, CENTI(Units.METRE)),
+                                Quantities.getQuantity(33, CENTI(Units.METRE))
+        ));
+
+        final var postamatCell1_4 = new PostamatCell(List.of(
+                Quantities.getQuantity(20, CENTI(Units.METRE)),
+                        Quantities.getQuantity(25, CENTI(Units.METRE)),
+                                Quantities.getQuantity(34, CENTI(Units.METRE))
+        ));
+        final var postamatCell2 = new PostamatCell(List.of(
+                Quantities.getQuantity(20, CENTI(Units.METRE)),
+                        Quantities.getQuantity(25, CENTI(Units.METRE)),
+                                Quantities.getQuantity(33, CENTI(Units.METRE))
+        ));
+        final var postamatCell3_1 = new PostamatCell(List.of(
+                Quantities.getQuantity(21, CENTI(Units.METRE)),
+                        Quantities.getQuantity(24, CENTI(Units.METRE)),
+                                Quantities.getQuantity(32, CENTI(Units.METRE))
+        ));
+        final var postamatCell3_2 = new PostamatCell(List.of(
+                Quantities.getQuantity(19, CENTI(Units.METRE)),
+                        Quantities.getQuantity(26, CENTI(Units.METRE)),
+                                Quantities.getQuantity(32, CENTI(Units.METRE))
+        ));
+        final var postamatCell3_3 = new PostamatCell(List.of(
+                Quantities.getQuantity(19, CENTI(Units.METRE)),
+                        Quantities.getQuantity(24, CENTI(Units.METRE)),
+                                Quantities.getQuantity(34, CENTI(Units.METRE))
+        ));
 
         when(postamatCellsRepository.getAllCells())
                 .thenReturn(List.of(postamatCell1_1, postamatCell1_2, postamatCell1_3, postamatCell1_4, postamatCell2,
