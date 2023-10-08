@@ -1,11 +1,14 @@
 package com.cdek.international.customs.measurements.ui;
 
 import com.cdek.international.customs.measurements.core.application.PostamatCellService;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import tech.units.indriya.ComparableQuantity;
 
+import javax.measure.quantity.Volume;
 import java.util.List;
 
 /**
@@ -30,5 +33,11 @@ public class PostamatController {
         return cells.stream()
                 .map(this.postamatConverter::toCellResponse)
                 .toList();
+    }
+
+    @GetMapping("volume")
+    public ComparableQuantity<Volume> getPostamatVolume() {
+        return this.postamatConverter.toUserVolumeResponseDto(
+                this.postamatCellService.getVolume());
     }
 }
