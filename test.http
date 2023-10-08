@@ -1,8 +1,19 @@
 
 ### Подобрать подходящую ячейку
-POST http://localhost:8080/api/postamat/suitableCell
+POST http://localhost:8080/api/postamat/suitableCells
 Content-Type: application/json
 
 {
-  "parcelDimensions": [30, 20, 10]
+  "parcelDimensions": [
+    30, 20, 10
+  ]
 }
+
+### Получить общий объем постамата
+GET http://localhost:8080/api/postamat/volume
+Accept-Language: ru-RU
+Content-Type: application/json
+
+### Получить объемный вес
+GET http://localhost:8080/api/postamat/volumeWeight
+Content-Type: application/json
