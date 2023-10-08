@@ -2,6 +2,7 @@ package com.cdek.international.customs.measurements.ui;
 
 import com.cdek.international.customs.measurements.core.application.PostamatCell;
 import com.cdek.international.customs.measurements.core.application.PostamatCellService;
+import com.cdek.international.customs.measurements.core.application.VolumeWeightFactory;
 import com.cdek.international.customs.measurements.infrastructure.conf.JacksonConfiguration;
 import com.cdek.international.customs.measurements.infrastructure.db.PostamatCellsRepository;
 import org.junit.jupiter.api.Test;
@@ -26,7 +27,7 @@ import static org.mockito.Mockito.when;
 
 @WebMvcTest
 @AutoConfigureJsonTesters
-@Import({ PostamatCellService.class, PostamatConverter.class, JacksonConfiguration.class })
+@Import({ PostamatCellService.class, PostamatConverter.class, JacksonConfiguration.class, VolumeWeightFactory.class })
 class PostamatControllerTest {
     @Autowired
     private MockMvc mockMvc;
@@ -36,7 +37,6 @@ class PostamatControllerTest {
 
     @Autowired
     private JacksonTester<List<String>> listStringJacksonTester;
-
     @Autowired
     private JacksonTester<SuitableCellRequestDto> suitableCellRequestDtoJacksonTester;
 
@@ -53,45 +53,57 @@ class PostamatControllerTest {
                 Quantities.getQuantity(21, CENTI(Units.METRE)),
                 Quantities.getQuantity(26, CENTI(Units.METRE)),
                 Quantities.getQuantity(34, CENTI(Units.METRE))
-        ));
+        ),
+                Quantities.getQuantity(5, Units.KILOGRAM));
 
         final var postamatCell1_2 = new PostamatCell(List.of(
                 Quantities.getQuantity(21, CENTI(Units.METRE)),
                 Quantities.getQuantity(25, CENTI(Units.METRE)),
                 Quantities.getQuantity(33, CENTI(Units.METRE))
-        ));
+        ),
+                Quantities.getQuantity(5, Units.KILOGRAM));
 
         final var postamatCell1_3 = new PostamatCell(List.of(
                 Quantities.getQuantity(20, CENTI(Units.METRE)),
                 Quantities.getQuantity(26, CENTI(Units.METRE)),
                 Quantities.getQuantity(33, CENTI(Units.METRE))
-        ));
+        ),
+                Quantities.getQuantity(5, Units.KILOGRAM));
 
         final var postamatCell1_4 = new PostamatCell(List.of(
                 Quantities.getQuantity(20, CENTI(Units.METRE)),
                 Quantities.getQuantity(25, CENTI(Units.METRE)),
                 Quantities.getQuantity(34, CENTI(Units.METRE))
-        ));
+        ),
+                Quantities.getQuantity(5, Units.KILOGRAM));
+
         final var postamatCell2 = new PostamatCell(List.of(
                 Quantities.getQuantity(20, CENTI(Units.METRE)),
                 Quantities.getQuantity(25, CENTI(Units.METRE)),
                 Quantities.getQuantity(33, CENTI(Units.METRE))
-        ));
+        ),
+                Quantities.getQuantity(5, Units.KILOGRAM));
+
         final var postamatCell3_1 = new PostamatCell(List.of(
                 Quantities.getQuantity(21, CENTI(Units.METRE)),
                 Quantities.getQuantity(24, CENTI(Units.METRE)),
                 Quantities.getQuantity(32, CENTI(Units.METRE))
-        ));
+        ),
+                Quantities.getQuantity(5, Units.KILOGRAM));
+
         final var postamatCell3_2 = new PostamatCell(List.of(
                 Quantities.getQuantity(19, CENTI(Units.METRE)),
                 Quantities.getQuantity(26, CENTI(Units.METRE)),
                 Quantities.getQuantity(32, CENTI(Units.METRE))
-        ));
+        ),
+                Quantities.getQuantity(5, Units.KILOGRAM));
+
         final var postamatCell3_3 = new PostamatCell(List.of(
                 Quantities.getQuantity(19, CENTI(Units.METRE)),
                 Quantities.getQuantity(24, CENTI(Units.METRE)),
                 Quantities.getQuantity(34, CENTI(Units.METRE))
-        ));
+        ),
+                Quantities.getQuantity(5, Units.KILOGRAM));
 
         when(postamatCellsRepository.getAllCells())
                 .thenReturn(List.of(postamatCell1_1, postamatCell1_2, postamatCell1_3, postamatCell1_4, postamatCell2,

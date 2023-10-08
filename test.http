@@ -27,3 +27,7 @@ Content-Type: application/json
 GET http://localhost:8080/api/postamat/volume
 Accept-Language: ja-JP
 Content-Type: application/json
+
+### Получить объемный вес
+GET http://localhost:8080/api/postamat/volumeWeight
+Content-Type: application/json

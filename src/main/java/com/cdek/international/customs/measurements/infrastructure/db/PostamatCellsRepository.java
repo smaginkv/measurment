@@ -15,25 +15,26 @@ public class PostamatCellsRepository {
         return List.of(
                 new PostamatCell(
                         List.of(
-                                Quantities.getQuantity(200, MILLI(Units.METRE)),
-                                Quantities.getQuantity(200, MILLI(Units.METRE)),
-                                Quantities.getQuantity(200, MILLI(Units.METRE))
-                        )
+                                Quantities.getQuantity(150, MILLI(Units.METRE)),
+                                Quantities.getQuantity(150, MILLI(Units.METRE)),
+                                Quantities.getQuantity(150, MILLI(Units.METRE))
+                        ),
+                        Quantities.getQuantity(1, Units.KILOGRAM)
                 ),
                 new PostamatCell(
                         List.of(
                                 Quantities.getQuantity(450, MILLI(Units.METRE)),
                                 Quantities.getQuantity(300, MILLI(Units.METRE)),
                                 Quantities.getQuantity(200, MILLI(Units.METRE))
-                        )
-                ),
+                        ),
+                        Quantities.getQuantity(20, Units.KILOGRAM)),
                 new PostamatCell(
                         List.of(
                                 Quantities.getQuantity(150, MILLI(Units.METRE)),
                                 Quantities.getQuantity(100, MILLI(Units.METRE)),
                                 Quantities.getQuantity(100, MILLI(Units.METRE))
-                        )
-                )
+                        ),
+                        Quantities.getQuantity(10, Units.KILOGRAM))
         );
     }
 }

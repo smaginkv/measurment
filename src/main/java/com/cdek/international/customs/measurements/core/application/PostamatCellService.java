@@ -8,13 +8,19 @@ import javax.measure.Quantity;
 import javax.measure.quantity.Length;
 import javax.measure.quantity.Volume;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Service
 public class PostamatCellService {
     private final PostamatCellsRepository postamatCellsRepository;
+    private final VolumeWeightFactory volumeWeightFactory;
 
-    public PostamatCellService(PostamatCellsRepository postamatCellsRepository) {
+    public PostamatCellService(
+            PostamatCellsRepository postamatCellsRepository,
+            VolumeWeightFactory volumeWeightFactory
+    ) {
         this.postamatCellsRepository = postamatCellsRepository;
+        this.volumeWeightFactory = volumeWeightFactory;
     }
 
     public List<PostamatCell> getSuitableCell(List<Quantity<Length>> parcelDimensions) {
@@ -28,5 +34,24 @@ public class PostamatCellService {
                 .map(PostamatCell::getCellVolume)
                 .reduce(ComparableQuantity::add)
                 .orElseThrow(IllegalStateException::new);
+    }
+
+    public ComparableQuantity<VolumeWeight> getVolumeWeight() {
+        return this.postamatCellsRepository.getAllCells().stream()
+                .map(cell ->
+                        Stream.of(getCellWeight(cell), getCellVolumeWeight(cell))
+                                .max(Comparable::compareTo)
+                                .get()
+                )
+                .reduce(ComparableQuantity::add)
+                .orElseThrow(IllegalStateException::new);
+    }
+
+    private ComparableQuantity<VolumeWeight> getCellWeight(PostamatCell cell) {
+        return this.volumeWeightFactory.of(cell.weight());
+    }
+
+    private ComparableQuantity<VolumeWeight> getCellVolumeWeight(PostamatCell cell) {
+        return this.volumeWeightFactory.of(cell.getCellVolume());
     }
 }
