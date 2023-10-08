@@ -2,6 +2,7 @@ package com.cdek.international.customs.measurements.ui;
 
 import com.cdek.international.customs.measurements.core.application.PostamatCell;
 import com.cdek.international.customs.measurements.core.application.PostamatCellService;
+import com.cdek.international.customs.measurements.infrastructure.conf.JacksonConfiguration;
 import com.cdek.international.customs.measurements.infrastructure.db.PostamatCellsRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ import static org.mockito.Mockito.when;
 
 @WebMvcTest
 @AutoConfigureJsonTesters
-@Import({ PostamatCellService.class, PostamatConverter.class })
+@Import({ PostamatCellService.class, PostamatConverter.class, JacksonConfiguration.class })
 class PostamatControllerTest {
     @Autowired
     private MockMvc mockMvc;
@@ -42,49 +43,54 @@ class PostamatControllerTest {
     @Test
     void suitableCell_whenOk_expectEquals() throws Exception {
         //given
-        final var requestDto = new SuitableCellRequestDto(List.of(20, 25, 33));
+        final var requestDto = new SuitableCellRequestDto(List.of(
+                Quantities.getQuantity(20, CENTI(Units.METRE)),
+                Quantities.getQuantity(25, CENTI(Units.METRE)),
+                Quantities.getQuantity(33, CENTI(Units.METRE))
+
+        ));
         final var postamatCell1_1 = new PostamatCell(List.of(
                 Quantities.getQuantity(21, CENTI(Units.METRE)),
-                Quantities.getQuantity(26,CENTI(Units.METRE)),
-                        Quantities.getQuantity(34, CENTI(Units.METRE))
+                Quantities.getQuantity(26, CENTI(Units.METRE)),
+                Quantities.getQuantity(34, CENTI(Units.METRE))
         ));
 
         final var postamatCell1_2 = new PostamatCell(List.of(
                 Quantities.getQuantity(21, CENTI(Units.METRE)),
-                        Quantities.getQuantity(25, CENTI(Units.METRE)),
-                                Quantities.getQuantity(33, CENTI(Units.METRE))
+                Quantities.getQuantity(25, CENTI(Units.METRE)),
+                Quantities.getQuantity(33, CENTI(Units.METRE))
         ));
 
         final var postamatCell1_3 = new PostamatCell(List.of(
                 Quantities.getQuantity(20, CENTI(Units.METRE)),
-                        Quantities.getQuantity(26, CENTI(Units.METRE)),
-                                Quantities.getQuantity(33, CENTI(Units.METRE))
+                Quantities.getQuantity(26, CENTI(Units.METRE)),
+                Quantities.getQuantity(33, CENTI(Units.METRE))
         ));
 
         final var postamatCell1_4 = new PostamatCell(List.of(
                 Quantities.getQuantity(20, CENTI(Units.METRE)),
-                        Quantities.getQuantity(25, CENTI(Units.METRE)),
-                                Quantities.getQuantity(34, CENTI(Units.METRE))
+                Quantities.getQuantity(25, CENTI(Units.METRE)),
+                Quantities.getQuantity(34, CENTI(Units.METRE))
         ));
         final var postamatCell2 = new PostamatCell(List.of(
                 Quantities.getQuantity(20, CENTI(Units.METRE)),
-                        Quantities.getQuantity(25, CENTI(Units.METRE)),
-                                Quantities.getQuantity(33, CENTI(Units.METRE))
+                Quantities.getQuantity(25, CENTI(Units.METRE)),
+                Quantities.getQuantity(33, CENTI(Units.METRE))
         ));
         final var postamatCell3_1 = new PostamatCell(List.of(
                 Quantities.getQuantity(21, CENTI(Units.METRE)),
-                        Quantities.getQuantity(24, CENTI(Units.METRE)),
-                                Quantities.getQuantity(32, CENTI(Units.METRE))
+                Quantities.getQuantity(24, CENTI(Units.METRE)),
+                Quantities.getQuantity(32, CENTI(Units.METRE))
         ));
         final var postamatCell3_2 = new PostamatCell(List.of(
                 Quantities.getQuantity(19, CENTI(Units.METRE)),
-                        Quantities.getQuantity(26, CENTI(Units.METRE)),
-                                Quantities.getQuantity(32, CENTI(Units.METRE))
+                Quantities.getQuantity(26, CENTI(Units.METRE)),
+                Quantities.getQuantity(32, CENTI(Units.METRE))
         ));
         final var postamatCell3_3 = new PostamatCell(List.of(
                 Quantities.getQuantity(19, CENTI(Units.METRE)),
-                        Quantities.getQuantity(24, CENTI(Units.METRE)),
-                                Quantities.getQuantity(34, CENTI(Units.METRE))
+                Quantities.getQuantity(24, CENTI(Units.METRE)),
+                Quantities.getQuantity(34, CENTI(Units.METRE))
         ));
 
         when(postamatCellsRepository.getAllCells())
