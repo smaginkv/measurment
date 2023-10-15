@@ -1,8 +1,8 @@
 package com.cdek.international.customs.measurements.ui;
 
 import com.cdek.international.customs.measurements.core.application.CalcVolumeWeightUsecase;
-import com.cdek.international.customs.measurements.core.application.PostamatCellService;
 import com.cdek.international.customs.measurements.core.domain.VolumeWeight;
+import com.cdek.international.customs.measurements.infrastructure.db.PostamatRepository;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,30 +16,27 @@ import tech.units.indriya.format.NumberDelimiterQuantityFormat;
 import java.text.NumberFormat;
 import java.util.List;
 
-/**
- * Нужна зависимость web+lombok+indriya
- */
 @RestController
 @RequestMapping("/api/postamat")
 public class PostamatController {
-    private final PostamatCellService postamatCellService;
-    private final PostamatConverter postamatConverter;
     private final CalcVolumeWeightUsecase calcVolumeWeightUsecase;
+    private final PostamatRepository postamatRepository;
+    private final PostamatConverter postamatConverter;
 
     public PostamatController(
-            PostamatCellService postamatCellService,
+            PostamatRepository postamatRepository,
             PostamatConverter postamatConverter,
             CalcVolumeWeightUsecase calcVolumeWeightUsecase
     ) {
-        this.postamatCellService = postamatCellService;
+        this.postamatRepository = postamatRepository;
         this.postamatConverter = postamatConverter;
         this.calcVolumeWeightUsecase = calcVolumeWeightUsecase;
     }
 
     @PostMapping("suitableCell")
     public List<String> getSuitableCell(@RequestBody SuitableCellRequestDto requestDto) {
-        final var cells = this.postamatCellService.getSuitableCell(
-                requestDto.parcelDimensions());
+        final var cells = postamatRepository.findById()
+                .getSuitableCell(requestDto.parcelDimensions());
 
         return cells.stream()
                 .map(this.postamatConverter::toCellResponse)
@@ -48,8 +45,8 @@ public class PostamatController {
 
     @GetMapping("volume")
     public String getPostamatVolume() {
-        final var userConvertedVolume = this.postamatConverter.toUserVolumeResponseDto(
-                this.postamatCellService.getVolume());
+        final var volume = postamatRepository.findById().getVolume();
+        final var userConvertedVolume = this.postamatConverter.toUserVolumeResponseDto(volume);
 
         return NumberDelimiterQuantityFormat.getInstance(
                         NumberFormat.getInstance(LocaleContextHolder.getLocale()),

@@ -1,11 +1,11 @@
 package com.cdek.international.customs.measurements.ui;
 
 import com.cdek.international.customs.measurements.core.application.CalcVolumeWeightUsecase;
-import com.cdek.international.customs.measurements.core.application.PostamatCellService;
+import com.cdek.international.customs.measurements.core.domain.Postamat;
 import com.cdek.international.customs.measurements.core.domain.PostamatCell;
 import com.cdek.international.customs.measurements.core.domain.VolumeWeightFactory;
 import com.cdek.international.customs.measurements.infrastructure.conf.JacksonConfiguration;
-import com.cdek.international.customs.measurements.infrastructure.db.PostamatCellsRepository;
+import com.cdek.international.customs.measurements.infrastructure.db.PostamatRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.AutoConfigureJsonTesters;
@@ -28,14 +28,14 @@ import static org.mockito.Mockito.when;
 
 @WebMvcTest
 @AutoConfigureJsonTesters
-@Import({ PostamatCellService.class, PostamatConverter.class, JacksonConfiguration.class, VolumeWeightFactory.class,
+@Import({ PostamatConverter.class, JacksonConfiguration.class, VolumeWeightFactory.class,
         CalcVolumeWeightUsecase.class })
 class PostamatControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private PostamatCellsRepository postamatCellsRepository;
+    private PostamatRepository postamatRepository;
 
     @Autowired
     private JacksonTester<List<String>> listStringJacksonTester;
@@ -107,9 +107,17 @@ class PostamatControllerTest {
         ),
                 Quantities.getQuantity(5, Units.KILOGRAM));
 
-        when(postamatCellsRepository.getAllCells())
-                .thenReturn(List.of(postamatCell1_1, postamatCell1_2, postamatCell1_3, postamatCell1_4, postamatCell2,
-                        postamatCell3_1, postamatCell3_2, postamatCell3_3));
+        when(postamatRepository.findById())
+                .thenReturn(new Postamat(List.of(
+                        postamatCell1_1,
+                        postamatCell1_2,
+                        postamatCell1_3,
+                        postamatCell1_4,
+                        postamatCell2,
+                        postamatCell3_1,
+                        postamatCell3_2,
+                        postamatCell3_3
+                )));
 
         //when
         final var response = this.mockMvc.perform(
