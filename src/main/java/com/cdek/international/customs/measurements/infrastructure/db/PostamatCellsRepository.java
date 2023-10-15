@@ -1,6 +1,6 @@
 package com.cdek.international.customs.measurements.infrastructure.db;
 
-import com.cdek.international.customs.measurements.core.application.PostamatCell;
+import com.cdek.international.customs.measurements.core.domain.PostamatCell;
 import org.springframework.stereotype.Repository;
 import tech.units.indriya.quantity.Quantities;
 import tech.units.indriya.unit.Units;

@@ -1,5 +1,6 @@
 package com.cdek.international.customs.measurements.core.application;
 
+import com.cdek.international.customs.measurements.core.domain.PostamatCell;
 import com.cdek.international.customs.measurements.infrastructure.db.PostamatCellsRepository;
 import org.springframework.stereotype.Service;
 import tech.units.indriya.ComparableQuantity;
@@ -8,19 +9,15 @@ import javax.measure.Quantity;
 import javax.measure.quantity.Length;
 import javax.measure.quantity.Volume;
 import java.util.List;
-import java.util.stream.Stream;
 
 @Service
 public class PostamatCellService {
     private final PostamatCellsRepository postamatCellsRepository;
-    private final VolumeWeightFactory volumeWeightFactory;
 
     public PostamatCellService(
-            PostamatCellsRepository postamatCellsRepository,
-            VolumeWeightFactory volumeWeightFactory
+            PostamatCellsRepository postamatCellsRepository
     ) {
         this.postamatCellsRepository = postamatCellsRepository;
-        this.volumeWeightFactory = volumeWeightFactory;
     }
 
     public List<PostamatCell> getSuitableCell(List<Quantity<Length>> parcelDimensions) {
@@ -34,24 +31,5 @@ public class PostamatCellService {
                 .map(PostamatCell::getCellVolume)
                 .reduce(ComparableQuantity::add)
                 .orElseThrow(IllegalStateException::new);
-    }
-
-    public ComparableQuantity<VolumeWeight> getVolumeWeight() {
-        return this.postamatCellsRepository.getAllCells().stream()
-                .map(cell ->
-                        Stream.of(getCellWeight(cell), getCellVolumeWeight(cell))
-                                .max(Comparable::compareTo)
-                                .get()
-                )
-                .reduce(ComparableQuantity::add)
-                .orElseThrow(IllegalStateException::new);
-    }
-
-    private ComparableQuantity<VolumeWeight> getCellWeight(PostamatCell cell) {
-        return this.volumeWeightFactory.of(cell.weight());
-    }
-
-    private ComparableQuantity<VolumeWeight> getCellVolumeWeight(PostamatCell cell) {
-        return this.volumeWeightFactory.of(cell.getCellVolume());
     }
 }

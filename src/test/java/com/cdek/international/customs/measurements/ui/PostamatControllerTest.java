@@ -1,8 +1,9 @@
 package com.cdek.international.customs.measurements.ui;
 
-import com.cdek.international.customs.measurements.core.application.PostamatCell;
+import com.cdek.international.customs.measurements.core.application.CalcVolumeWeightUsecase;
 import com.cdek.international.customs.measurements.core.application.PostamatCellService;
-import com.cdek.international.customs.measurements.core.application.VolumeWeightFactory;
+import com.cdek.international.customs.measurements.core.domain.PostamatCell;
+import com.cdek.international.customs.measurements.core.domain.VolumeWeightFactory;
 import com.cdek.international.customs.measurements.infrastructure.conf.JacksonConfiguration;
 import com.cdek.international.customs.measurements.infrastructure.db.PostamatCellsRepository;
 import org.junit.jupiter.api.Test;
@@ -27,7 +28,8 @@ import static org.mockito.Mockito.when;
 
 @WebMvcTest
 @AutoConfigureJsonTesters
-@Import({ PostamatCellService.class, PostamatConverter.class, JacksonConfiguration.class, VolumeWeightFactory.class })
+@Import({ PostamatCellService.class, PostamatConverter.class, JacksonConfiguration.class, VolumeWeightFactory.class,
+        CalcVolumeWeightUsecase.class })
 class PostamatControllerTest {
     @Autowired
     private MockMvc mockMvc;

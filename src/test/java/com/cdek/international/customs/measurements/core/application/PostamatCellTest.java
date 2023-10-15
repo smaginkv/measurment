@@ -1,16 +1,18 @@
 package com.cdek.international.customs.measurements.core.application;
 
+import com.cdek.international.customs.measurements.core.domain.PostamatCell;
 import org.junit.jupiter.api.Test;
 import tech.units.indriya.ComparableQuantity;
 import tech.units.indriya.quantity.Quantities;
 import tech.units.indriya.unit.Units;
 
 import javax.measure.quantity.Volume;
-
 import java.util.List;
 
 import static javax.measure.MetricPrefix.MILLI;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class PostamatCellTest {
 

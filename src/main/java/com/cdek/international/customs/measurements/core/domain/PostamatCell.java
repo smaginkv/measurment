@@ -1,4 +1,4 @@
-package com.cdek.international.customs.measurements.core.application;
+package com.cdek.international.customs.measurements.core.domain;
 
 import tech.units.indriya.ComparableQuantity;
 

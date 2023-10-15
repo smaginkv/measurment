@@ -1,6 +1,6 @@
 package com.cdek.international.customs.measurements.ui;
 
-import com.cdek.international.customs.measurements.core.application.PostamatCell;
+import com.cdek.international.customs.measurements.core.domain.PostamatCell;
 import org.springframework.stereotype.Component;
 import tech.units.indriya.ComparableQuantity;
 import tech.units.indriya.unit.Units;

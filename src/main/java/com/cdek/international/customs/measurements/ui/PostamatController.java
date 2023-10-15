@@ -1,7 +1,8 @@
 package com.cdek.international.customs.measurements.ui;
 
+import com.cdek.international.customs.measurements.core.application.CalcVolumeWeightUsecase;
 import com.cdek.international.customs.measurements.core.application.PostamatCellService;
-import com.cdek.international.customs.measurements.core.application.VolumeWeight;
+import com.cdek.international.customs.measurements.core.domain.VolumeWeight;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,10 +24,16 @@ import java.util.List;
 public class PostamatController {
     private final PostamatCellService postamatCellService;
     private final PostamatConverter postamatConverter;
+    private final CalcVolumeWeightUsecase calcVolumeWeightUsecase;
 
-    public PostamatController(PostamatCellService postamatCellService, PostamatConverter postamatConverter) {
+    public PostamatController(
+            PostamatCellService postamatCellService,
+            PostamatConverter postamatConverter,
+            CalcVolumeWeightUsecase calcVolumeWeightUsecase
+    ) {
         this.postamatCellService = postamatCellService;
         this.postamatConverter = postamatConverter;
+        this.calcVolumeWeightUsecase = calcVolumeWeightUsecase;
     }
 
     @PostMapping("suitableCell")
@@ -51,7 +58,7 @@ public class PostamatController {
     }
 
     @GetMapping("volumeWeight")
-    public ComparableQuantity<VolumeWeight> getPostamatVolumeWeight() {
-        return this.postamatCellService.getVolumeWeight();
+    public ComparableQuantity<VolumeWeight> calcPostamatVolumeWeight() {
+        return this.calcVolumeWeightUsecase.calcVolumeWeight();
     }
 }
