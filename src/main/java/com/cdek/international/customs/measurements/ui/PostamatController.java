@@ -1,15 +1,20 @@
 package com.cdek.international.customs.measurements.ui;
 
 import com.cdek.international.customs.measurements.core.CalcVolumeWeightUsecase;
+import com.cdek.international.customs.measurements.core.domain.VolumeWeight;
 import com.cdek.international.customs.measurements.infra.PostamatRepositoryImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import tech.units.indriya.ComparableQuantity;
+import tech.units.indriya.format.LocalUnitFormat;
+import tech.units.indriya.format.NumberDelimiterQuantityFormat;
 
-import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.util.List;
 
 @RestController
@@ -35,13 +40,18 @@ public class PostamatController {
     }
 
     @GetMapping("volume")
-    public BigDecimal getVolume() {
+    public String getVolume() {
         final var volume = this.postamatRepository.getById().getVolume();
-        return this.postamatWebConverter.toUserVolumeResponseDto(volume);
+        final var userConvertedVolume = this.postamatWebConverter.toUserVolumeResponseDto(volume);
+
+        return NumberDelimiterQuantityFormat.getInstance(
+                        NumberFormat.getInstance(LocaleContextHolder.getLocale()),
+                        LocalUnitFormat.getInstance(LocaleContextHolder.getLocale()))
+                .format(userConvertedVolume);
     }
 
     @GetMapping("volumeWeight")
-    public BigDecimal getVolumeWeight() {
+    public ComparableQuantity<VolumeWeight> getVolumeWeight() {
         return this.calcVolumeWeightUsecase.calcVolumeWeight();
     }
 }

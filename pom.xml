@@ -15,6 +15,7 @@
     <description>measurements</description>
     <properties>
         <java.version>17</java.version>
+        <systems-uom.version>2.1</systems-uom.version>
     </properties>
     <dependencies>
         <dependency>
@@ -30,6 +31,28 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
+        </dependency>
+<!--        единицы измерения-->
+        <dependency>
+            <groupId>tech.units</groupId>
+            <artifactId>indriya</artifactId>
+            <version>2.1.2</version>
+        </dependency>
+<!--        сериализация десериализация-->
+        <dependency>
+            <groupId>tech.uom.lib</groupId>
+            <artifactId>uom-lib-jackson</artifactId>
+            <version>${systems-uom.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>systems.uom</groupId>
+            <artifactId>systems-ucum</artifactId>
+            <version>${systems-uom.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>systems.uom</groupId>
+            <artifactId>systems-quantity</artifactId>
+            <version>${systems-uom.version}</version>
         </dependency>
     </dependencies>
 

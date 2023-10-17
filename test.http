@@ -5,13 +5,27 @@ Content-Type: application/json
 
 {
   "parcelDimensions": [
-    30, 20, 10
+    {
+      "unit": "cm",
+      "scale": "ABSOLUTE",
+      "value": 10
+    },
+    {
+      "unit": "cm",
+      "scale": "ABSOLUTE",
+      "value": 20
+    },
+    {
+      "unit": "cm",
+      "scale": "ABSOLUTE",
+      "value": 30
+    }
   ]
 }
 
 ### Получить общий объем постамата
 GET http://localhost:8080/api/postamat/volume
-Accept-Language: ru-RU
+Accept-Language: ja-JP
 Content-Type: application/json
 
 ### Получить объемный вес

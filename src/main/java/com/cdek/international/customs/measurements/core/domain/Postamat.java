@@ -1,20 +1,23 @@
 package com.cdek.international.customs.measurements.core.domain;
 
-import java.math.BigDecimal;
+import tech.units.indriya.ComparableQuantity;
+
+import javax.measure.Quantity;
+import javax.measure.quantity.Length;
+import javax.measure.quantity.Volume;
 import java.util.List;
 
 public record Postamat(List<PostamatCell> cells) {
-    public List<PostamatCell> getSuitableCells(List<Integer> parcelDimensions) {
+    public List<PostamatCell> getSuitableCells(List<Quantity<Length>> parcelDimensions) {
         return this.cells.stream()
                 .filter(cell -> cell.isGreaterThanOrEqualTo(parcelDimensions))
                 .toList();
     }
 
-    public BigDecimal getVolume() {
+    public ComparableQuantity<Volume> getVolume() {
         return cells.stream()
                 .map(PostamatCell::getVolume)
-                .map(BigDecimal::valueOf)
-                .reduce(BigDecimal::add)
+                .reduce(ComparableQuantity::add)
                 .orElseThrow(IllegalStateException::new);
     }
 }
