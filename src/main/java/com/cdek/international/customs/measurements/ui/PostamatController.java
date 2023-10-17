@@ -22,8 +22,13 @@ public class PostamatController {
 
     @PostMapping("suitableCells")
     public List<String> getSuitableCells(@RequestBody SuitableCellsRequestDto requestDto) {
+        final var parcelDimensions = requestDto.parcelDimensions().stream()
+                .sorted()
+                .toList();
+
         final var postamat = this.postamatRepository.getById();
-        final var cells = postamat.getSuitableCells(requestDto.parcelDimensions());
+        final var cells = postamat.getSuitableCells(parcelDimensions);
+
         return cells.stream()
                 .map(this.postamatWebConverter::toSuitableCellsResponseDto)
                 .toList();

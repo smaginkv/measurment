@@ -5,6 +5,13 @@ import java.util.stream.IntStream;
 
 public record PostamatCell(List<Long> dimensions, Long weight) {
 
+    public PostamatCell(List<Long> dimensions, Long weight) {
+        this.dimensions = dimensions.stream()
+                .sorted()
+                .toList();
+        this.weight = weight;
+    }
+
     public boolean isGreaterThanOrEqualTo(List<Integer> parcelDimensions) {
         return IntStream.range(0, 3)
                 .allMatch(i -> dimensions.get(i) >= parcelDimensions.get(i));
