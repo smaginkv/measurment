@@ -10,6 +10,10 @@ public record PostamatCell(List<Long> dimensions, Long weight) {
                 .sorted()
                 .toList();
         this.weight = weight;
+
+        if (dimensions.size() != 3) {
+            throw new IllegalArgumentException("Expect exactly three dimensions");
+        }
     }
 
     public boolean isGreaterThanOrEqualTo(List<Integer> parcelDimensions) {
