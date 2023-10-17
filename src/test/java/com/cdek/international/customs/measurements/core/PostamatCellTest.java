@@ -1,5 +1,6 @@
 package com.cdek.international.customs.measurements.core;
 
+//import com.cdek.international.customs.measurements.core.domain.PostamatCell;
 //import org.junit.jupiter.api.Test;
 //import tech.units.indriya.ComparableQuantity;
 //import tech.units.indriya.quantity.Quantities;
@@ -8,8 +9,11 @@ package com.cdek.international.customs.measurements.core;
 //import javax.measure.quantity.Volume;
 //import java.util.List;
 //
+//import static javax.measure.MetricPrefix.KILO;
 //import static javax.measure.MetricPrefix.MILLI;
-//import static org.junit.jupiter.api.Assertions.*;
+//import static org.junit.jupiter.api.Assertions.assertEquals;
+//import static org.junit.jupiter.api.Assertions.assertNotEquals;
+//import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 class PostamatCellTest {
@@ -34,6 +38,9 @@ class PostamatCellTest {
 //        assertTrue(actual.isEquivalentTo(expected));
 //        assertEquals(0, actual.compareTo(expected));
 //        assertTrue(actual.getUnit().isCompatible(expected.getUnit()));
+//
+//        assertNotEquals(Units.KILOGRAM, KILO(Units.GRAM));
+//        assertTrue(Units.KILOGRAM.isCompatible(KILO(Units.KILOGRAM)));
 //    }
-  
+
 }
