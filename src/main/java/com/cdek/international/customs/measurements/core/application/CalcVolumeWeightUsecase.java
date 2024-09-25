@@ -9,6 +9,13 @@ import tech.units.indriya.ComparableQuantity;
 
 import java.util.stream.Stream;
 
+//todo NotNull проставить,
+// продублировать в usual
+// тесты?
+// может библиотека новая для сериализации есть?
+// что там с базой данных
+
+
 @Component
 public class CalcVolumeWeightUsecase {
     private final PostamatRepository postamatRepository;

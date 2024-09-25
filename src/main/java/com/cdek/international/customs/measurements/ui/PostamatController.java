@@ -35,10 +35,9 @@ public class PostamatController {
 
     @PostMapping("suitableCell")
     public List<String> getSuitableCell(@RequestBody SuitableCellRequestDto requestDto) {
-        final var cells = postamatRepository.findById()
-                .getSuitableCell(requestDto.parcelDimensions());
-
-        return cells.stream()
+        return postamatRepository.findById()
+                .getSuitableCell(requestDto.parcelDimensions())
+                .stream()
                 .map(this.postamatConverter::toCellResponse)
                 .toList();
     }
