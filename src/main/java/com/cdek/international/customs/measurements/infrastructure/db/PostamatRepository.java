@@ -4,17 +4,33 @@ import com.cdek.international.customs.measurements.core.domain.PostamatCell;
 import com.cdek.international.customs.measurements.core.domain.Postamat;
 import lombok.NonNull;
 import org.springframework.stereotype.Repository;
+import tech.units.indriya.quantity.Quantities;
+import tech.units.indriya.unit.Units;
 
 import java.util.List;
+
+import static javax.measure.MetricPrefix.MILLI;
 
 @Repository
 public class PostamatRepository {
     @NonNull
     public Postamat get() {
         return new Postamat(List.of(
-                new PostamatCell(List.of(150, 150, 150)),
-                new PostamatCell(List.of(450, 300, 200)),
-                new PostamatCell(List.of(150, 100, 100))
+                new PostamatCell(List.of(
+                        Quantities.getQuantity(150, MILLI(Units.METRE)),
+                        Quantities.getQuantity(150, MILLI(Units.METRE)),
+                        Quantities.getQuantity(150, MILLI(Units.METRE))
+                )),
+                new PostamatCell(List.of(
+                        Quantities.getQuantity(450, MILLI(Units.METRE)),
+                        Quantities.getQuantity(300, MILLI(Units.METRE)),
+                        Quantities.getQuantity(200, MILLI(Units.METRE))
+                )),
+                new PostamatCell(List.of(
+                        Quantities.getQuantity(150, MILLI(Units.METRE)),
+                        Quantities.getQuantity(100, MILLI(Units.METRE)),
+                        Quantities.getQuantity(100, MILLI(Units.METRE))
+                ))
         )
         );
     }
