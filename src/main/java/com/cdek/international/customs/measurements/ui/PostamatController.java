@@ -1,6 +1,7 @@
 package com.cdek.international.customs.measurements.ui;
 
 import com.cdek.international.customs.measurements.core.application.PostamatCellService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,14 +14,10 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/postamat")
+@RequiredArgsConstructor
 public class PostamatController {
     private final PostamatCellService postamatCellService;
     private final PostamatConverter postamatConverter;
-
-    public PostamatController(PostamatCellService postamatCellService, PostamatConverter postamatConverter) {
-        this.postamatCellService = postamatCellService;
-        this.postamatConverter = postamatConverter;
-    }
 
     @PostMapping("suitableCell")
     public List<String> getSuitableCell(@RequestBody SuitableCellRequestDto requestDto) {
