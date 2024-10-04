@@ -1,8 +1,8 @@
 package com.cdek.international.customs.measurements.ui;
 
-import com.cdek.international.customs.measurements.core.application.PostamatCell;
-import com.cdek.international.customs.measurements.core.application.PostamatCellService;
-import com.cdek.international.customs.measurements.infrastructure.db.PostamatCellsRepository;
+import com.cdek.international.customs.measurements.core.domain.Postamat;
+import com.cdek.international.customs.measurements.core.domain.PostamatCell;
+import com.cdek.international.customs.measurements.infrastructure.db.PostamatRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.AutoConfigureJsonTesters;
@@ -22,13 +22,13 @@ import static org.mockito.Mockito.when;
 
 @WebMvcTest
 @AutoConfigureJsonTesters
-@Import({ PostamatCellService.class, PostamatConverter.class })
+@Import({ PostamatConverter.class })
 class PostamatControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private PostamatCellsRepository postamatCellsRepository;
+    private PostamatRepository postamatRepository;
 
     @Autowired
     private JacksonTester<List<String>> listStringJacksonTester;
@@ -49,9 +49,9 @@ class PostamatControllerTest {
         final var postamatCell3_2 = new PostamatCell(List.of(19, 26, 32));
         final var postamatCell3_3 = new PostamatCell(List.of(19, 24, 34));
 
-        when(postamatCellsRepository.getAllCells())
-                .thenReturn(List.of(postamatCell1_1, postamatCell1_2, postamatCell1_3, postamatCell1_4, postamatCell2,
-                        postamatCell3_1, postamatCell3_2, postamatCell3_3));
+        when(postamatRepository.get())
+                .thenReturn(new Postamat(List.of(postamatCell1_1, postamatCell1_2, postamatCell1_3, postamatCell1_4, postamatCell2,
+                        postamatCell3_1, postamatCell3_2, postamatCell3_3)));
 
         //when
         final var response = this.mockMvc.perform(

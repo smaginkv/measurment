@@ -1,6 +1,7 @@
 package com.cdek.international.customs.measurements.ui;
 
-import com.cdek.international.customs.measurements.core.application.PostamatCellService;
+import com.cdek.international.customs.measurements.infrastructure.db.PostamatRepository;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,15 +17,15 @@ import java.util.List;
 @RequestMapping("/api/postamat")
 @RequiredArgsConstructor
 public class PostamatController {
-    private final PostamatCellService postamatCellService;
+    private final PostamatRepository postamatRepository;
     private final PostamatConverter postamatConverter;
 
+    @NonNull
     @PostMapping("suitableCell")
-    public List<String> getSuitableCell(@RequestBody SuitableCellRequestDto requestDto) {
-        final var cells = this.postamatCellService.getSuitableCell(
-                requestDto.parcelDimensions());
-
-        return cells.stream()
+    public List<String> getSuitableCell(@RequestBody @NonNull SuitableCellRequestDto requestDto) {
+        return postamatRepository.get()
+                .getSuitableCell(requestDto.parcelDimensions())
+                .stream()
                 .map(this.postamatConverter::toCellResponse)
                 .toList();
     }
