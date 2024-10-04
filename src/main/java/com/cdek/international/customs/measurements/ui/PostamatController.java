@@ -3,6 +3,7 @@ package com.cdek.international.customs.measurements.ui;
 import com.cdek.international.customs.measurements.core.application.CalcVolumeWeightUsecase;
 import com.cdek.international.customs.measurements.core.domain.VolumeWeight;
 import com.cdek.international.customs.measurements.infrastructure.db.PostamatRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,20 +19,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/postamat")
+@RequiredArgsConstructor
 public class PostamatController {
     private final CalcVolumeWeightUsecase calcVolumeWeightUsecase;
     private final PostamatRepository postamatRepository;
     private final PostamatConverter postamatConverter;
-
-    public PostamatController(
-            PostamatRepository postamatRepository,
-            PostamatConverter postamatConverter,
-            CalcVolumeWeightUsecase calcVolumeWeightUsecase
-    ) {
-        this.postamatRepository = postamatRepository;
-        this.postamatConverter = postamatConverter;
-        this.calcVolumeWeightUsecase = calcVolumeWeightUsecase;
-    }
 
     @PostMapping("suitableCell")
     public List<String> getSuitableCell(@RequestBody SuitableCellRequestDto requestDto) {
